@@ -1,0 +1,55 @@
+\begin{problem}
+    \texttt{LARGEST\_CLIQUE} \\
+    \texttt{INPUT :} A graph $G$. \\
+    \texttt{OUTPUT :} The size $\omega(G)$ of the largest clique in $G$.
+\end{problem}
+
+%Definition of some common problems
+%We aim to show that they are easier to solve on interval graphs
+\begin{problem}
+    \texttt{HAS\_K\_COLORING} \\
+    \texttt{INPUT :} A graph $G$ and an integer $k$. \\
+    \texttt{OUTPUT :} True if $G$ has a $k$-coloring, False otherwise.
+\end{problem}
+
+\begin{problem}
+    \texttt{FIND\_PEO} \\
+    \texttt{INPUT :} A graph $G$ admitting a PEO. \\
+    \texttt{OUTPUT :} A PEO $(v_i)_{i\in\llbracket 1, \mid V(G) \mid \rrbracket}$ of $G$.
+\end{problem}
+
+\begin{problem}
+    \texttt{GRAPH\_COLORING} \\
+    \texttt{INPUT :} A graph $G$. \\
+    \texttt{OUTPUT :} A graph coloring $\phi : V(G) \rightarrow \llbracket 1, \mathcal{X}(G) \rrbracket$ of $G$.
+\end{problem}
+
+%Firt of all, let's show some reduction relations between these problems
+\begin{proposition}
+    \texttt{HAS\_K\_COLORING} $\leq_p$ \texttt{LARGEST\_CLIQUE} $\leq_p$ \texttt{FIND\_PEO}.
+\end{proposition}
+
+\begin{proof}
+    Let us show \texttt{HAS\_K\_COLORING} $\leq_p$ \texttt{LARGEST\_CLIQUE}. \\
+    Let $G$ be a graph and $k$ an integer. \\
+    Supposing we know the answer of \texttt{LARGEST\_CLIQUE} on $G$, we know $\omega(G)$. \\
+    According to lemma \ref{lemma:ki_g_eq_omega_g}, if $k \geq \omega(G)$, then $G$ has a $k$-coloring, otherwise it does not. \\
+    Thus, \texttt{HAS\_K\_COLORING} $\leq_p$ \texttt{LARGEST\_CLIQUE}. \medskip
+
+    Let us show \texttt{LARGEST\_CLIQUE} $\leq_p$ \texttt{FIND\_PEO}. \\
+    Let $G$ be a graph. \\
+    Supposing we know the answer of \texttt{FIND\_PEO} on $G$, we know a PEO $(v_i)_{i\in\llbracket 1, \mid V(G) \mid \rrbracket}$ of $G$. \\
+    We color the vertices of $G$ in the reverse order of the PEO using the greedy algorithm \ref{lst:greedy_coloring}, using instead a large enough set of colors $\{c_i\}_i$. \\
+    This algorithm is cleary polynomial and gives a correct coloring using $x$ colors with $x\leq \omega(G)$ according to its definition. \\
+    So we get $x=\omega(G)$, which is the answer of \texttt{LARGEST\_CLIQUE}. \\
+\end{proof}
+
+\begin{proposition}
+    \texttt{GRAPH\_COLORING} $\leq_p$ \texttt{FIND\_PEO}.
+\end{proposition}
+
+\begin{proof}
+    Knowing a PEO of a graph $G$, we can color the vertices of $G$ using the greedy algorithm \ref{lst:greedy_coloring} with a large enough set of colors $\{c_i\}_i$. \\
+    This algorithm is cleary polynomial and gives a correct coloring of $G$, using $\omega(G)$ colors. \\
+    Since $\omega(G)=\mathcal{X}(G)$, this coloring is the answer of \texttt{GRAPH\_COLORING}. \\
+\end{proof}
